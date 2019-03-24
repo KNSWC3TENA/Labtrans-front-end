@@ -8,8 +8,9 @@
 
 <ui:composition template="/WEB-INF/templates/Base.xhtml">
     <ui:define name="content">
-        #{pagina.getInicio()}"
-        <h:commandButton value="Nova Reserva" type="button" actionListener="#{Pagina.setCadastroPagina()}" style="margin-left:30px;" />
+        #{pagina.getInicio()}
+        <input type="text" name="teste" id="teste" value="teste"/>
+        <h:inputText type="text" id="teste2"/>
     </ui:define>
 </ui:composition>
 </html>

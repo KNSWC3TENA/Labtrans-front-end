@@ -2,13 +2,36 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<ui:composition template="/WEB-INF/templates/Base.xhtml">
+<ui:composition template="/WEB-INF/templates/Base.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="content">
-       Cadastrar
+  	<h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
+    	<p:outputLabel for="@next" name="lblNome" value="Responsável: " style="margin: 10px 10px 10px 10px"/>
+    	    	<h:inputText id="txtNome" type="text" value="" size="40" style="margin: 10px 10px 10px 10px"/>
+    	    	
+   	<!-- LISTA DE LOCAIS WIP: AJUSTE PENDENTE -->
+	<h:selectOneMenu value="#{Filiais.selecaoFilial}">
+    	<f:ajax listener="#{Filiais.setSelecao()}" render="local_selecao" />
+    	<f:selectItems value="#{Filiais.filial}" />
+	</h:selectOneMenu>
+	<!-- LISTA DE SALAS DOS LOCAIS ACIMA WIP: AJUSTE PENDENTE-->
+	<h:selectOneMenu id="local_selecao" value="#{Filiais.selecaoLocal}">
+    	<f:selectItems value="#{Filiais.selecionarFilial()}" />
+	</h:selectOneMenu>
+
+<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:250px">
+	<h:form style="padding-left:40%; border-style:dotted">
+   <p:calendar value="#{dateBean2.sampleDate}" pattern="MM/dd/yyyy HH:mm">
+   </p:calendar>
+
+	</h:form>
+</p:fieldset>
+       <h:commandButton id="submit-button" value="Nova Reserva" action="#{Controlador.NovaReserva()}" style="margin-left:40%;" />
+</h:form>
+<br/>
+		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"></h:outputText>
     </ui:define>
 </ui:composition>
 </html>
