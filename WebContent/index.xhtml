@@ -8,9 +8,7 @@
 
 <ui:composition template="/WEB-INF/templates/Base.xhtml">
     <ui:define name="content">
-        #{pagina.getInicio()}
-        <input type="text" name="teste" id="teste" value="teste"/>
-        <h:inputText type="text" id="teste2"/>
+        <h:outputText value="Valor Bean - #{pagina.inicio}"/>
     </ui:define>
 </ui:composition>
 </html>

@@ -1,37 +1,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-
-<ui:composition template="/WEB-INF/templates/Base.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    
+<ui:composition template="/WEB-INF/templates/Base.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"	xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:define name="content">
   	<h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
-    	<p:outputLabel for="@next" name="lblNome" value="Responsável: " style="margin: 10px 10px 10px 10px"/>
+    	<p:outputLabel for="@next" name="lblNome" value="Responsável: "/>
     	    	<h:inputText id="txtNome" type="text" value="" size="40" style="margin: 10px 10px 10px 10px"/>
     	    	
-   	<!-- LISTA DE LOCAIS WIP: AJUSTE PENDENTE -->
-	<h:selectOneMenu value="#{Filiais.selecaoFilial}">
-    	<f:ajax listener="#{Filiais.setSelecao()}" render="local_selecao" />
+   	<!-- LISTA DE LOCAIS-->
+   	<h:outputLabel for="@next" name="lblFilial" value="Filial: "/>
+	<h:selectOneMenu id="menu_selecao" value="#{Filiais.selecaoFilial}">
+    	<f:ajax listener="#{Filiais.selecionarFilial}" render="local_selecao" />
     	<f:selectItems value="#{Filiais.filial}" />
 	</h:selectOneMenu>
-	<!-- LISTA DE SALAS DOS LOCAIS ACIMA WIP: AJUSTE PENDENTE-->
+	
+	<!-- LISTA DE SALAS DOS LOCAIS ACIMA-->
+	<h:outputLabel for="@next" name="lblLocal" value="Local: "/>
 	<h:selectOneMenu id="local_selecao" value="#{Filiais.selecaoLocal}">
-    	<f:selectItems value="#{Filiais.selecionarFilial()}" />
+    	<f:selectItems value="#{Filiais.lista}" />
 	</h:selectOneMenu>
+	<br/>
+	<h:outputText name="lblDesc" value="Descrição: " />
+	<br/>
+	<h:inputTextarea type="textarea" name="txtDesc" rows="4" cols="40" required="true">
 
-<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:250px">
-	<h:form style="padding-left:40%; border-style:dotted">
-   <p:calendar value="#{dateBean2.sampleDate}" pattern="MM/dd/yyyy HH:mm">
-   </p:calendar>
+	</h:inputTextarea>	
+	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:250px">
+ 	  <p:calendar value="#{dateBean2.sampleDate}" pattern="MM/dd/yyyy HH:mm" required="true">
+ 	  </p:calendar>
+	</p:fieldset>
+	
+	<!-- OPÇÃO DE CAFÉ OU NÃO -->
+	<p:outputLabel for="@next" name ="lblCafe" value="Café? - "/>
+	<p:selectBooleanCheckbox name="boxCafe" value="#{Controlador.boxCafe}">
+	<!-- CAIXA DE SELEÇÃO, INVOCA CONTROLADOR BEAN QUANDO MODIFICADA -->
+	<p:ajax listener="#{Controlador.cafeBoxChange}" render="spinnerCafe"/>
+		</p:selectBooleanCheckbox>
+		
+		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
+		<p:outputLabel for="@next" id="lblCafeSpinner" value="Q. Pessoas: "/>
+		<!--SPINNER, INVOCA CONTROLADOR BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
+		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{cafeQPessoas}">
+			<p:ajax listener="#{Controlador.cafeQPessoasChange}"/>
+			</p:spinner>
 
-	</h:form>
-</p:fieldset>
+		<!-- BOTÃO DE ENVIO DOS DADOS PARA A INSERÇÃO NO BANCO DE DADOS, PENDENTE AJUSTE -->
        <h:commandButton id="submit-button" value="Nova Reserva" action="#{Controlador.NovaReserva()}" style="margin-left:40%;" />
 </h:form>
 <br/>
 		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"></h:outputText>
     </ui:define>
 </ui:composition>
-</html>
