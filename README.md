@@ -9,3 +9,8 @@ Tecnologias utilizadas:
           Arquivos Jar do primefaces e JSTL inseridos na pasta WebContent/WEB-INF/lib
           Cabeçalho e Rodapé nos Templates de JSF iniciados (pendendo mudanças).
           Corrigidos diversos erros no código, páginas agora são renderizadas corretamente.
+  25/03 - Construída boa parte da página de cadastros, diversos erros corrigidos.
+          Projeto reiniciado agora como JSF 2.2 (Antes estava como JSF 2.0)
+          Bibliotecas substituídas devido à inutilidade e incompatibilidade
+          
+     
