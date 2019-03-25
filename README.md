@@ -12,5 +12,6 @@ Tecnologias utilizadas:
   25/03 - Construída boa parte da página de cadastros, diversos erros corrigidos.
           Projeto reiniciado agora como JSF 2.2 (Antes estava como JSF 2.0)
           Bibliotecas substituídas devido à inutilidade e incompatibilidade
+          Adicionado css base para ser utilizado nas páginas futuramente
           
      
