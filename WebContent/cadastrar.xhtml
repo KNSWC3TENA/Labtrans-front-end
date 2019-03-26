@@ -4,31 +4,47 @@
 <ui:composition template="/WEB-INF/templates/Base.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" 
 	xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"	xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:define name="content">
-  	<h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
-    	<p:outputLabel for="@next" name="lblNome" value="Responsável: "/>
-    	    	<h:inputText id="txtNome" type="text" value="" size="40" style="margin: 10px 10px 10px 10px"/>
+    
+<h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
+    <p:outputLabel for="@next" name="lblNome" value="Responsável: "/>
+    <h:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" size="40" style="margin: 10px 10px 10px 10px"/>
     	    	
-   	<!-- LISTA DE LOCAIS-->
+   	<!-- LISTA DE LOCAIS -->
    	<h:outputLabel for="@next" name="lblFilial" value="Filial: "/>
-	<h:selectOneMenu id="menu_selecao" value="#{Filiais.selecaoFilial}">
+	<h:selectOneMenu id="menu_selecao" value="#{Filiais.selecaoFilial}" required="true">
     	<f:ajax listener="#{Filiais.selecionarFilial}" render="local_selecao" />
     	<f:selectItems value="#{Filiais.filial}" />
 	</h:selectOneMenu>
-	
-	<!-- LISTA DE SALAS DOS LOCAIS ACIMA-->
+	<!-- LISTA DE SALAS DOS LOCAIS ACIMA -->
 	<h:outputLabel for="@next" name="lblLocal" value="Local: "/>
-	<h:selectOneMenu id="local_selecao" value="#{Filiais.selecaoLocal}">
+	<h:selectOneMenu id="local_selecao" value="#{Filiais.selecaoLocal}" required="true">
     	<f:selectItems value="#{Filiais.lista}" />
 	</h:selectOneMenu>
 	<br/>
+	
+	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
 	<h:outputText name="lblDesc" value="Descrição: " />
 	<br/>
-	<h:inputTextarea type="textarea" name="txtDesc" rows="4" cols="40" required="true">
-
-	</h:inputTextarea>	
-	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:250px">
- 	  <p:calendar value="#{dateBean2.sampleDate}" pattern="MM/dd/yyyy HH:mm" required="true">
- 	  </p:calendar>
+	<h:inputTextarea type="textarea" name="txtDesc" value="#{Controlador.desc}" rows="4" cols="40" required="true">
+	</h:inputTextarea>
+	
+	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
+	
+	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:450px">
+ 	  <p:calendar value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
+ 	  <h:panelGrid columns="2" style="margin: 10px 10px 10px 10px" cellpadding="5">
+ 		<p:outputLabel for="@next" name="lblDuracao" value="Duração da reunião: "/>
+ 		<p:selectOneRadio id="duracao" value="#{Controlador.duracao}" layout="grid" columns="3" required="true">
+ 			<f:selectItem itemLabel="1 Hora" itemValue="1"/>
+ 			<f:selectItem itemLabel="2 Horas" itemValue="2"/>
+ 			<f:selectItem itemLabel="3 Horas" itemValue="3"/>
+ 			
+ 			<f:selectItem itemLabel="4 Horas" itemValue="4"/>
+ 			<f:selectItem itemLabel="6 Horas" itemValue="6"/>
+ 			<f:selectItem itemLabel="8 Horas" itemValue="8"/>
+ 			
+ 		</p:selectOneRadio>
+ 	  </h:panelGrid>
 	</p:fieldset>
 	
 	<!-- OPÇÃO DE CAFÉ OU NÃO -->
@@ -37,18 +53,16 @@
 	<!-- CAIXA DE SELEÇÃO, INVOCA CONTROLADOR BEAN QUANDO MODIFICADA -->
 	<p:ajax listener="#{Controlador.cafeBoxChange}" render="spinnerCafe"/>
 		</p:selectBooleanCheckbox>
-		
 		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
 		<p:outputLabel for="@next" id="lblCafeSpinner" value="Q. Pessoas: "/>
 		<!--SPINNER, INVOCA CONTROLADOR BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
-		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{cafeQPessoas}">
-			<p:ajax listener="#{Controlador.cafeQPessoasChange}"/>
+		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{Controlador.cafeQPessoas}">
 			</p:spinner>
 
-		<!-- BOTÃO DE ENVIO DOS DADOS PARA A INSERÇÃO NO BANCO DE DADOS, PENDENTE AJUSTE -->
-       <h:commandButton id="submit-button" value="Nova Reserva" action="#{Controlador.NovaReserva()}" style="margin-left:40%;" />
+		<!-- BOTÃO DE ENVIO DOS DADOS PARA A INSERÇÃO NO BANCO DE DADOS -->
+       <h:commandButton id="submit-button" value="Nova Reserva" action="#{Controlador.NovaReserva}" style="margins: 10px 10px 10px 40%" />
 </h:form>
 <br/>
-		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"></h:outputText>
+		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"/>
     </ui:define>
 </ui:composition>
