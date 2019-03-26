@@ -6,19 +6,19 @@
     <ui:define name="content">
     
 <h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
-    <p:outputLabel for="@next" name="lblNome" value="Responsável: "/>
+    <p:outputLabel for="txtNome" name="lblNome" value="Responsável: "/>
     <h:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" size="40" style="margin: 10px 10px 10px 10px"/>
     	    	
    	<!-- LISTA DE LOCAIS -->
-   	<h:outputLabel for="@next" name="lblFilial" value="Filial: "/>
-	<h:selectOneMenu id="menu_selecao" value="#{Filiais.selecaoFilial}" required="true">
-    	<f:ajax listener="#{Filiais.selecionarFilial}" render="local_selecao" />
-    	<f:selectItems value="#{Filiais.filial}" />
+   	<h:outputLabel for="menu_selecao" name="lblFilial" value="Filial: "/>
+	<h:selectOneMenu id="menu_selecao" value="#{Controlador.selecaoFilial}" required="true">
+    	<f:ajax listener="#{Controlador.selecionarFilial}" render="local_selecao" />
+    	<f:selectItems value="#{Controlador.filial}" />
 	</h:selectOneMenu>
 	<!-- LISTA DE SALAS DOS LOCAIS ACIMA -->
-	<h:outputLabel for="@next" name="lblLocal" value="Local: "/>
-	<h:selectOneMenu id="local_selecao" value="#{Filiais.selecaoLocal}" required="true">
-    	<f:selectItems value="#{Filiais.lista}" />
+	<h:outputLabel for="local_selecao" name="lblLocal" value="Local: "/>
+	<h:selectOneMenu id="local_selecao" value="#{Controlador.selecaoLocal}" required="true">
+    	<f:selectItems value="#{Controlador.lista}" />
 	</h:selectOneMenu>
 	<br/>
 	
@@ -31,9 +31,9 @@
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
 	
 	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:450px">
- 	  <p:calendar value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
+ 	  <p:calendar id ="calendar" value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
  	  <h:panelGrid columns="2" style="margin: 10px 10px 10px 10px" cellpadding="5">
- 		<p:outputLabel for="@next" name="lblDuracao" value="Duração da reunião: "/>
+ 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião: "/>
  		<p:selectOneRadio id="duracao" value="#{Controlador.duracao}" layout="grid" columns="3" required="true">
  			<f:selectItem itemLabel="1 Hora" itemValue="1"/>
  			<f:selectItem itemLabel="2 Horas" itemValue="2"/>
@@ -48,13 +48,13 @@
 	</p:fieldset>
 	
 	<!-- OPÇÃO DE CAFÉ OU NÃO -->
-	<p:outputLabel for="@next" name ="lblCafe" value="Café? - "/>
-	<p:selectBooleanCheckbox name="boxCafe" value="#{Controlador.boxCafe}">
+	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - "/>
+	<p:selectBooleanCheckbox id="boxCafe" value="#{Controlador.boxCafe}">
 	<!-- CAIXA DE SELEÇÃO, INVOCA CONTROLADOR BEAN QUANDO MODIFICADA -->
 	<p:ajax listener="#{Controlador.cafeBoxChange}" render="spinnerCafe"/>
 		</p:selectBooleanCheckbox>
 		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
-		<p:outputLabel for="@next" id="lblCafeSpinner" value="Q. Pessoas: "/>
+		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas: "/>
 		<!--SPINNER, INVOCA CONTROLADOR BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
 		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{Controlador.cafeQPessoas}">
 			</p:spinner>
