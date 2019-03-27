@@ -3,6 +3,13 @@ Tecnologias utilizadas:
   JSF
   Primefaces
   Ajax
+  JavaScript
+  
+  Dificuldades Encontradas: 
+    JSF é naturalmente inviável a ser utilizado para construção RESTful devido à sua natureza de manipulação de dados, como RESTful não foi considerado como um requisito funcional, tal não foi cumprido devido à viabilidade.
+    Apesar de possuír 1 ano de experiência com Java EE, JSF foi um certo desafio à se aprofundar porém o aprendizado foi flúido e trouxe resultados rápidamente para a construção do sistema.
+    A escolha de layout e aparência das páginas fica por conta do programador, por banana ser uma empresa fictícia, e sem base alguma apesar de providenciar liberdade para a criatividade também se aumenta a dificuldade de desenvolvimento por não possuir escopo de projeto.
+  
   
   23/03 - Páginas iniciais (vazias ou quase) criadas, projeto estabelecido
   24/03 - Página de cadastro em construção - ligação com beans para seleção das listas e atribuição de variáveis
@@ -17,6 +24,9 @@ Tecnologias utilizadas:
           (re)Criada página de listagem, possúi uma dataTable que recebe todos os dados da tabela
           Tabela da página de listagem agora é interativa, possúi caixas para seleção múltipla de fileiras
           Página de listagem em torno de 70% completa, em breve será a ligação para as funções de edição e exclusão de registros.
+          Diversos pequenos ajustes.
+  27/03 - Páginas de listagem contendo funções de seleção, edição e exclusão de dados completa, pendente estilização
+          Pendente pequeno ajuste com a seleção de local na seção de edição de dados, única função restante para a funcionalidade total do           sistema.
           Diversos pequenos ajustes.
           
      
