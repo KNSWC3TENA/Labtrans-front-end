@@ -19,10 +19,10 @@
             <h:outputText value="#{reserva.responsavel}" />
         </p:column>
             <p:column headerText="Local">
-            <h:outputText value="#{reserva.local}" />
+            <h:outputText value="#{reserva.filial}" />
         </p:column>
            <p:column headerText="Sala">
-            <h:outputText value="#{reserva.filial}" />
+            <h:outputText value="#{reserva.local}" />
         </p:column>
         <p:column headerText="Data e Hora">
             <h:outputText value="#{reserva.datahoraini}" />
@@ -37,17 +37,88 @@
             <h:outputText value="#{reserva.cafe}" />
         </p:column>
         <f:facet name="footer">
-            <p:commandButton process="lista" update="multiRowDetail" icon="pi pi-search" value="Selecionar" oncomplete="PF('multiRowDetail').show()" />
+        <p:commandButton style="text-align:center;" process="lista" update="multiRowDetail" value="Excluir Registros" oncomplete="PF('multiRowDetail').show()" onclick="PF('multiRowDetail').update())" />
+    	<p:commandButton style="text-align:center;" process="lista" update="editForm" value="Editar Registro" oncomplete="PF('editForm').show()" onclick="PF('editForm').update()"/>
+    	<!-- <h:outputText id="txtNRow" value="N° - #{Lista.nRowsSelecionadas}"/> -->
         </f:facet>
     </p:dataTable>
     </h:form>
     
-    <!-- Mostra/armazenamento client-side das rows selecionadas  --> 
-        <p:outputPanel id="multiRowDetail" style="text-align:center;">
-            <ui:repeat value="#{Lista.rowsSelecionadas}" var="row">
-                <h:outputText value="#{reserva.id} - #{reserva.responsavel} - #{reserva.datahoraini}" style="display:block"/>
-            </ui:repeat>
+ <p:outputPanel id="editRowDetail" style="text-align:center;">
+<br/>
+		<h:outputText name="lblResultado" value=""/>
         </p:outputPanel>
+    <!-- Mostra/armazenamento client-side das rows selecionadas  -->
+        <p:outputPanel id="multiRowDetail" style="text-align:center;">
+        <h:outputText value="Entradas selecionadas:"/>
+            <ui:repeat value="#{Lista.rowsSelecionadas}" var="row">
+                <h:outputText value="#{row.id} - #{row.responsavel} - #{row.datahoraini}" style="display:block"/>
+            </ui:repeat>
+        <h:outputLabel for="btnExcluir" value="Deseja excluir as entradas? -"/>
+        <h:commandButton id="btnExcluir" value="Sim" action="#{Lista.excluirEntradas}" style="margin-left:10px"/>
+        <h:commandButton id="btnCancelar" value="Não" action="#{Lista.cancelarSelecoes}" style="margin-left:10px"/>
+        </p:outputPanel>
+     <h:outputText value="#{Pagina.mensagem}"/>
 		<br/>
+		
+		    
+	<!--====================================================  EDIÇÃO ======================================================== -->
+ 	<h:form id="editForm">
+    <p:outputLabel for="txtNome" name="lblNome" value="Responsável: "/>
+    <h:inputText id="txtNome" type="text" value="#{Lista.edicaoResponsavel}" size="40" style="margin: 10px 10px 10px 10px"/>
+    	    	
+   	<!-- LISTA DE LOCAIS -->
+   	<h:outputLabel for="menu_selecao" name="lblFilial" value="Filial: "/>
+	<h:selectOneMenu id="menu_selecao" value="#{Lista.edicaoFilial}" required="true">
+    	<f:ajax listener="#{Controlador.selecionarFilial}" render="local_selecao" />
+    	<f:selectItems value="#{Controlador.filial}" />
+	</h:selectOneMenu>
+	<!-- LISTA DE SALAS DOS LOCAIS ACIMA -->
+	<h:outputLabel for="local_selecao" name="lblLocal" value="Local: "/>
+	<h:selectOneMenu id="local_selecao" value="#{Lista.edicaoLocal}" required="true">
+    	<f:selectItems value="#{Controlador.lista}" />
+	</h:selectOneMenu>
+	<br/>
+	
+	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
+	<h:outputText name="lblDesc" value="Descrição: " />
+	<br/>
+	<h:inputTextarea type="textarea" name="txtDesc" value="#{Lista.edicaoDesc}" rows="4" cols="40" required="true">
+	</h:inputTextarea>
+	
+	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
+	
+	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:450px">
+ 	  <p:calendar id ="calendar" value="#{Lista.edicaoDatahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
+ 	  <h:panelGrid columns="2" style="margin: 10px 10px 10px 10px" cellpadding="5">
+ 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião: "/>
+ 		<p:selectOneRadio id="duracao" value="#{Lista.edicaoDuracao}" layout="grid" columns="3" required="true">
+ 			<f:selectItem itemLabel="1 Hora" itemValue="1"/>
+ 			<f:selectItem itemLabel="2 Horas" itemValue="2"/>
+ 			<f:selectItem itemLabel="3 Horas" itemValue="3"/>
+ 			
+ 			<f:selectItem itemLabel="4 Horas" itemValue="4"/>
+ 			<f:selectItem itemLabel="6 Horas" itemValue="6"/>
+ 			<f:selectItem itemLabel="8 Horas" itemValue="8"/>
+ 			
+ 		</p:selectOneRadio>
+ 	  </h:panelGrid>
+	</p:fieldset>
+	
+	<!-- OPÇÃO DE CAFÉ OU NÃO -->
+	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - "/>
+	<p:selectBooleanCheckbox id="boxCafe" value="#{Lista.boxCafe}">
+	<!-- CAIXA DE SELEÇÃO, INVOCA LISTA BEAN QUANDO MODIFICADA -->
+	<p:ajax listener="#{Lista.cafeBoxChange}" render="spinnerCafe"/>
+		</p:selectBooleanCheckbox>
+		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
+		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas: "/>
+		<!--SPINNER, INVOCA LISTA BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
+		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{Lista.cafeQPessoas}">
+			</p:spinner>
+
+		<!-- BOTÃO DE ENVIO DOS DADOS PARA A ATUALIZAÇÃO NO BANCO DE DADOS -->
+       <p:commandButton id="submit-button" value="Atualizar Reserva" action="#{Lista.EditarReserva}" style="margins: 10px 10px 10px 40%" />
+       </h:form>
     </ui:define>
 </ui:composition>
