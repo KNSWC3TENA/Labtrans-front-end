@@ -51,6 +51,7 @@
         <h:outputLabel for="btnExcluir" value="Deseja excluir as entradas?"/>
         <h:form>
         <p:growl id="growl" life="2000" />
+        <br/>
         <p:commandButton id="btnExcluir" update="growl listaForm" value="Sim" action="#{Lista.excluirEntradas}" oncomplete ="PF('multiRowDialog').hide()" style="margin-left:10px"/>
         <p:commandButton id="btnCancelar" update="listaForm" value="Não" action="#{Lista.cancelarSelecoes}" oncomplete ="PF('multiRowDialog').hide()" style="margin-left:10px"/>
         </h:form>
@@ -60,7 +61,7 @@
 		
 		    
 	<!--====================================================  EDIÇÃO ======================================================== -->
-	<p:dialog header = "Editar Entrada" id="editRowDialog" widgetVar="editRowDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="900px" height="350px">
+	<p:dialog header = "Editar Entrada" id="editRowDialog" widgetVar="editRowDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="880px" height="350px">
  	<h:form id="editForm">
     <p:outputLabel for="txtNome" name="lblNome" value="Responsável:" style="margin: 10px 5px 10px 10px"/>
     <p:inputText id="txtNome" type="text" value="#{Lista.edicaoResponsavel}" size="40" style="margin: 10px 10px 10px 5px" required="true"/>
@@ -80,7 +81,7 @@
 	
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
 	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:350px; display:inline-block;">
- 	  <p:calendar id ="calendar" value="#{Lista.edicaoDatahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px" required="true"/>
+ 	  <p:calendar id ="calendar" value="#{Lista.edicaoDatahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px" minHour="7" maxHour="18" required="true"/>
  		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião:"  style="margin:10px 0px 10px 10px"/>
  		<p:selectOneRadio id="duracao" value="#{Lista.edicaoDuracao}" layout="grid" columns="3" required="true">
  			<f:selectItem itemLabel="1 Hora" itemValue="1"/>

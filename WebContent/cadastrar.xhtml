@@ -24,7 +24,7 @@
 	
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
 	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:350px; display:inline-block;">
- 	  <p:calendar id ="calendar" value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px" required="true"/>
+ 	  <p:calendar id ="calendar" value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"  minHour="7" maxHour="18" required="true"/>
  	  <br/><br/>
  		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião:"  style="margin:10px 0px 10px 10px"/>
  		<p:selectOneRadio id="duracao" value="#{Controlador.duracao}" layout="grid" columns="3" required="true">

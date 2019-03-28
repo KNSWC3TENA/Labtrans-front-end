@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
- xmlns:h="http://java.sun.com/jsf/html">
- <h:head>
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <!-- UTILIZADA EM TODOS AS PÁGINAS QUE UTILIZAM DA TEMPLATE BASE, PODE SER UTILIZADA COMO UM ARQUIVO DE CSS -->
-<link rel="stylesheet" type="text/css" href="css/styles.css"/>
- </h:head>
+<h:outputStylesheet name="styles.css" library="css"/>
+</h:head>
 <h:body>
-<div style="width:100%;font-size:36px;line-height:48px;height:150px;background-color:#ffd633;color:black;font-weight:bold">
-<div style="padding-left:15%; padding-top:15px;">Banana Ltda.</div>
-<div style="padding-left:50%; padding-top: 30px;">O prazer de atendimento é nosso.</div>
+<div style="background-color:#FFE66D; border-radius:5px; height:130px; position:relative; left:0">
+<h:graphicImage url="/resources/Banana.png" style="margin-left:10px"/>
 </div>
-<br></br>
-<div style="font-size:20px; background-color:black; color:white; font-weight:bold; text-align:center">
-<a href="index.jsf">Home</a> || <a href="listar.jsf">Reservas</a> || <a href="cadastrar.jsf">Nova Reserva</a>
-</div>
+<p:fieldset style="text-align:center; padding-left:0px; margin-left:0px; position:relative; left:0;">
+<h:form>
+<p:linkButton value="Home" outcome="index.jsf" style="width:160px; margin:0px 30px 0px 30px"/> <p:linkButton value="Reservas" outcome="listar.jsf" style="width:160px; margin:0px 30px 0px 30px"/> <p:linkButton value="Nova Reserva" outcome="cadastrar.jsf" style="width:160px; margin:0px 30px 0px 30px"/>
+</h:form>
+</p:fieldset>
 </h:body>
 </html>
