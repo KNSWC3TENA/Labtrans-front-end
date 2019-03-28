@@ -4,36 +4,29 @@
 <ui:composition template="/WEB-INF/templates/Base.xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" 
 	xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"	xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:define name="content">
-    
-<h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
-    <p:outputLabel for="txtNome" name="lblNome" value="Responsável: "/>
-    <h:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" size="40" style="margin: 10px 10px 10px 10px" required="true"/>
+<p:fieldset legend="Cadastro de nova reserva para reunião">
+<h:form id="reservaForm" style="margin:10px 10px 10px 5px">
+    <p:outputLabel for="txtNome" name="lblNome" value="Responsável:" style="margin: 10px 5px 10px 10px"/>
+    <p:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" style="margin: 10px 10px 10px 5px" size="40" required="true"/>
     	    	
    	<!-- LISTA DE LOCAIS -->
-   	<h:outputLabel for="menu_selecao" name="lblFilial" value="Filial: "/>
-	<h:selectOneMenu id="menu_selecao" value="#{Controlador.selecaoFilial}" required="true">
+   	<p:outputLabel for="menu_selecao" name="lblFilial" value="Filial:" style="margin: 10px 5px 10px 10px"/>
+	<p:selectOneMenu id="menu_selecao" value="#{Controlador.selecaoFilial}" style="margin: 10px 10px 10px 0px" required="true">
     	<f:ajax listener="#{Controlador.selecionarFilial}" render="local_selecao" />
     	<f:selectItems value="#{Controlador.filial}" />
-	</h:selectOneMenu>
+	</p:selectOneMenu> ---> 
 	<!-- LISTA DE SALAS DOS LOCAIS ACIMA -->
-	<h:outputLabel for="local_selecao" name="lblLocal" value="Local: "/>
-	<h:selectOneMenu id="local_selecao" value="#{Controlador.selecaoLocal}" required="true">
+	<p:outputLabel for="local_selecao" name="lblLocal" value="Local:" style="margin: 10px 5px 10px 10px"/>
+	<p:selectOneMenu id="local_selecao" value="#{Controlador.selecaoLocal}" required="true" style="margin: 10px 10px 10px 0px">
     	<f:selectItems value="#{Controlador.lista}" />
-	</h:selectOneMenu>
+	</p:selectOneMenu>
 	<br/>
-	
-	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
-	<h:outputText name="lblDesc" value="Descrição: " />
-	<br/>
-	<h:inputTextarea type="textarea" name="txtDesc" value="#{Controlador.desc}" rows="4" cols="40">
-	</h:inputTextarea>
 	
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
-	
-	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:450px">
- 	  <p:calendar id ="calendar" value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
- 	  <h:panelGrid columns="2" style="margin: 10px 10px 10px 10px" cellpadding="5">
- 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião: "/>
+	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:350px; display:inline-block;">
+ 	  <p:calendar id ="calendar" value="#{Controlador.datahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px" required="true"/>
+ 	  <br/><br/>
+ 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião:"  style="margin:10px 0px 10px 10px"/>
  		<p:selectOneRadio id="duracao" value="#{Controlador.duracao}" layout="grid" columns="3" required="true">
  			<f:selectItem itemLabel="1 Hora" itemValue="1"/>
  			<f:selectItem itemLabel="2 Horas" itemValue="2"/>
@@ -42,28 +35,31 @@
  			<f:selectItem itemLabel="4 Horas" itemValue="4"/>
  			<f:selectItem itemLabel="6 Horas" itemValue="6"/>
  			<f:selectItem itemLabel="8 Horas" itemValue="8"/>
- 			
  		</p:selectOneRadio>
- 	  </h:panelGrid>
 	</p:fieldset>
-	
+	<div id="org" style="position:absolute; display:inline-block">
+	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
+	<p:outputLabel for="txtDesc" name="lblDesc" value="Descrição:" style="margin: 10px 10px 0px 10px; position:absolute"/>
+	<p:inputTextarea type="textarea" id="txtDesc" name="txtDesc" value="#{Controlador.desc}" rows="4" cols="40" style="margin: 30px 10px 10px 10px; position:static"/>
+	<br/>
 	<!-- OPÇÃO DE CAFÉ OU NÃO -->
-	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - "/>
-	<p:selectBooleanCheckbox id="boxCafe" value="#{Controlador.boxCafe}">
+	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - " style="position:absolute; margin: 10px 0px 10px 10px"/>
+	<p:selectBooleanCheckbox id="boxCafe" value="#{Controlador.boxCafe}" style="margin: 10px 10px 10px 80px">
 	<!-- CAIXA DE SELEÇÃO, INVOCA CONTROLADOR BEAN QUANDO MODIFICADA -->
 	<p:ajax listener="#{Controlador.cafeBoxChange}" render="spinnerCafe"/>
 		</p:selectBooleanCheckbox>
 		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
-		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas: "/>
+		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas:"/>
 		<!--SPINNER, INVOCA CONTROLADOR BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
-		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{Controlador.cafeQPessoas}">
+		<p:spinner id="spinnerCafe" min="0" max="35" size="2" value="#{Controlador.cafeQPessoas}">
 			</p:spinner>
 
 		<!-- BOTÃO DE ENVIO DOS DADOS PARA A INSERÇÃO NO BANCO DE DADOS -->
+		<br/>
 		<p:growl id="growl" life="2000" />
-       <p:commandButton id="submit-button" update="growl" value="Nova Reserva" action="#{Controlador.NovaReserva}" style="margins: 10px 10px 10px 40%" />
+       <p:commandButton id="submit-button" update="growl" value="Nova Reserva" action="#{Controlador.NovaReserva}" style="margin: 0px 10px 20px 10px;position:relative" />
+</div>
 </h:form>
-<br/>
-		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"/>
+</p:fieldset>
     </ui:define>
 </ui:composition>

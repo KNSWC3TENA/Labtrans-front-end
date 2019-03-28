@@ -9,9 +9,10 @@ h1,h2,h3 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black;
 }
-input[aria-required="true"] {
-   color: red;
+input {
+	margin:10px 10px 10px 10px;
 }
+
 h1.title {
   display: table;
   margin: auto;

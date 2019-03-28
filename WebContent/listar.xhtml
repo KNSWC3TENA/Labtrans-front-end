@@ -46,7 +46,7 @@
     <!-- Mostra/armazenamento client-side das rows selecionadas  -->
         <p:outputPanel id="multiRowDetail" style="text-align:center;">
             <ui:repeat value="#{Lista.rowsSelecionadas}" var="row">
-                <h:outputText value="#{row.id} - #{row.responsavel} - #{row.datahoraini}" style="display:block"/>
+                <h:outputText value="#{row.id} - #{row.responsavel} - #{row.datahorainiString}" style="display:block"/>
             </ui:repeat>
         <h:outputLabel for="btnExcluir" value="Deseja excluir as entradas?"/>
         <h:form>
@@ -60,35 +60,28 @@
 		
 		    
 	<!--====================================================  EDIÇÃO ======================================================== -->
-	<p:dialog header = "Editar Entrada" id="editRowDialog" widgetVar="editRowDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="60%">
+	<p:dialog header = "Editar Entrada" id="editRowDialog" widgetVar="editRowDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="900px" height="350px">
  	<h:form id="editForm">
-    <p:outputLabel for="txtNome" name="lblNome" value="Responsável: "/>
-    <h:inputText id="txtNome" type="text" value="#{Lista.edicaoResponsavel}" size="40" style="margin: 10px 10px 10px 10px" required="true"/>
-    	    	
+    <p:outputLabel for="txtNome" name="lblNome" value="Responsável:" style="margin: 10px 5px 10px 10px"/>
+    <p:inputText id="txtNome" type="text" value="#{Lista.edicaoResponsavel}" size="40" style="margin: 10px 10px 10px 5px" required="true"/>
+   	<br/>
    	<!-- LISTA DE LOCAIS -->
-   	<h:outputLabel for="menu_selecao" name="lblFilial" value="Filial: "/>
-	<h:selectOneMenu id="menu_selecao" value="#{Lista.edicaoFilial}" required="true">
+   	<p:outputLabel for="menu_selecao" name="lblFilial" value="Filial:" style="margin: 20px 5px 10px 10px"/>
+	<p:selectOneMenu id="menu_selecao" value="#{Lista.edicaoFilial}" required="true">
     	<f:ajax listener="#{Lista.selecionarFilialAjax}" render="local_selecao" />
     	<f:selectItems value="#{Controlador.filial}" />
-	</h:selectOneMenu>
+	</p:selectOneMenu>
 	<!-- LISTA DE SALAS DOS LOCAIS ACIMA -->
-	<h:outputLabel for="local_selecao" name="lblLocal" value="Local: "/>
-	<h:selectOneMenu id="local_selecao" value="#{Lista.edicaoLocal}" required="true">
+	<p:outputLabel for="local_selecao" name="lblLocal" value="Local:"  style="margin: 10px 5px 10px 10px"/>
+	<p:selectOneMenu id="local_selecao" value="#{Lista.edicaoLocal}" required="true">
     	<f:selectItems value="#{Lista.listaLocais}" />
-	</h:selectOneMenu>
+	</p:selectOneMenu>
 	<br/>
-	
-	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
-	<h:outputText name="lblDesc" value="Descrição: " />
-	<br/>
-	<h:inputTextarea type="textarea" name="txtDesc" value="#{Lista.edicaoDesc}" rows="4" cols="40">
-	</h:inputTextarea>
 	
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
-	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:450px">
- 	  <p:calendar id ="calendar" value="#{Lista.edicaoDatahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px"/>
- 	  <h:panelGrid columns="2" style="margin: 10px 10px 10px 10px" cellpadding="5">
- 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião: "/>
+	<p:fieldset legend="Data e hora da reserva" style="margin:10px 10px 10px 10px; width:350px; display:inline-block;">
+ 	  <p:calendar id ="calendar" value="#{Lista.edicaoDatahoraini}" pattern="yyyy-MM-dd HH:mm" style="margin:10px 10px 10px 10px" required="true"/>
+ 		<p:outputLabel for="duracao" name="lblDuracao" value="Duração da reunião:"  style="margin:10px 0px 10px 10px"/>
  		<p:selectOneRadio id="duracao" value="#{Lista.edicaoDuracao}" layout="grid" columns="3" required="true">
  			<f:selectItem itemLabel="1 Hora" itemValue="1"/>
  			<f:selectItem itemLabel="2 Horas" itemValue="2"/>
@@ -97,26 +90,31 @@
  			<f:selectItem itemLabel="4 Horas" itemValue="4"/>
  			<f:selectItem itemLabel="6 Horas" itemValue="6"/>
  			<f:selectItem itemLabel="8 Horas" itemValue="8"/>
- 			
  		</p:selectOneRadio>
- 	  </h:panelGrid>
 	</p:fieldset>
 	
+	<div id="org" style="position:absolute; display:inline-block">
+	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
+	<p:outputLabel for="txtDesc" name="lblDesc" value="Descrição:" style="margin: 10px 10px 0px 10px; position:absolute" />
+	<br/>
+	<h:inputTextarea type="textarea" id="txtDesc" name="txtDesc" value="#{Lista.edicaoDesc}" rows="4" cols="40" style="margin: 30px 10px 10px 10px; position:static"/>
+	<br/>
 	<!-- OPÇÃO DE CAFÉ OU NÃO -->
-	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - "/>
-	<p:selectBooleanCheckbox id="boxCafe" value="#{Lista.boxCafe}">
+	<p:outputLabel for="boxCafe" name ="lblCafe" value="Café? - " style="position:absolute; margin: 10px 0px 10px 10px"/>
+	<p:selectBooleanCheckbox id="boxCafe" value="#{Lista.boxCafe}" style="margin: 10px 10px 10px 80px">
 	<!-- CAIXA DE SELEÇÃO, INVOCA LISTA BEAN QUANDO MODIFICADA -->
 	<p:ajax listener="#{Lista.cafeBoxChange}" render="spinnerCafe"/>
 		</p:selectBooleanCheckbox>
 		<!-- SELEÇÃO DO NÚMERO DE PESSOAS PARA O CAFÉ -->
-		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas: "/>
+		<p:outputLabel for="spinnerCafe" id="lblCafeSpinner" value="Q. Pessoas:"/>
 		<!--SPINNER, INVOCA LISTA BEAN QUANDO MODIFICADO - MINIMO DE 0 PESSOAS, MÁXIMA DE 35 -->
-		<p:spinner id="spinnerCafe" min="0" max="35" size="1" value="#{Lista.cafeQPessoas}">
+		<p:spinner id="spinnerCafe" min="0" max="35" size="2" value="#{Lista.cafeQPessoas}">
 			</p:spinner>
 
 		<!-- BOTÃO DE ENVIO DOS DADOS PARA A ATUALIZAÇÃO NO BANCO DE DADOS -->
 		<p:growl id="growl" life="2000" />
        <p:commandButton id="btnEditar" update="growl listaForm" value="Atualizar Reserva" action="#{Lista.EditarReserva}" oncomplete ="PF('editRowDialog').hide()" style="margins: 10px 10px 10px 40%" />
+       </div>
        </h:form>
        </p:dialog>
     </ui:define>
