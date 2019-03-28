@@ -30,31 +30,36 @@ Tecnologias utilizadas:
       para consistência de dados.
       Data e hora de fim são selecionadas em um menu de escolha única com botões de 1, 2, 3, 4, 6 e 8 horas de reunião, as quais são           utilizadas nas funções de banco de dados (adicionadas em cima da data/hora de início) para servirem efetivamente como datas e hora       de fim sem ocupar mais espaço no banco.
       Café constitui de uma caixa de seleção e um Spinner que vai de 0 a 35, caso a caixa de seleção esteja ativa o número do spinner é       enviado ao banco em um número inteiro com o que foi selecionado, caso a caixa não esteja selecionada, o valor do spinner enviado é       forçado a ser 0, efetivamente comunicando que não há necessidade de café.
-      No aperto do botão de Nova Reserva e na função de inserção de dados, a função inicialmente faz uma pesquisa de SELECT no banco de       dados para a checagem de existência de alguma entrada entre a data/hora inicial e a data/hora final, caso exista, a função               imediatamente retorna falsa e não cria uma nova entrada.
-    
+      No aperto do botão de Nova Reserva e na função de inserção de dados, a função inicialmente faz uma pesquisa de SELECT no banco de       dados para a checagem de existência de alguma entrada entre a data/hora inicial e a data/hora final, caso exista, a função               imediatamente retorna falsa e não cria uma nova entrada, mostrando a mensagem ("Já existe uma reunião na data selecionada") para o       usuário.
+      
   
   Dificuldades Encontradas: 
     JSF é naturalmente inviável a ser utilizado para construção RESTful devido à sua natureza de manipulação de dados, como RESTful não foi considerado como um requisito funcional, tal não foi cumprido devido à viabilidade.
     Apesar de possuír 1 ano de experiência com Java EE, JSF foi um certo desafio à se aprofundar porém o aprendizado foi flúido e trouxe resultados rápidamente para a construção do sistema.
     A escolha de layout e aparência das páginas fica por conta do programador, por banana ser uma empresa fictícia, e sem base alguma apesar de providenciar liberdade para a criatividade também se aumenta a dificuldade de desenvolvimento por não possuir escopo de projeto.
   
-  
+  Notas/dia:
   23/03 - Páginas iniciais (vazias ou quase) criadas, projeto estabelecido
   24/03 - Página de cadastro em construção - ligação com beans para seleção das listas e atribuição de variáveis
           Arquivos Jar do primefaces e JSTL inseridos na pasta WebContent/WEB-INF/lib
           Cabeçalho e Rodapé nos Templates de JSF iniciados (pendendo mudanças).
           Corrigidos diversos erros no código, páginas agora são renderizadas corretamente.
+          
   25/03 - Construída boa parte da página de cadastros, diversos erros corrigidos.
           Projeto reiniciado agora como JSF 2.2 (Antes estava como JSF 2.0)
           Bibliotecas substituídas devido à inutilidade e incompatibilidade
           Adicionado css base para ser utilizado nas páginas futuramente
+          
   26/03 - Terminada página de cadastros, implementação de cadastramento de reuniões completa, pendente estilização de página.
           (re)Criada página de listagem, possúi uma dataTable que recebe todos os dados da tabela
           Tabela da página de listagem agora é interativa, possúi caixas para seleção múltipla de fileiras
           Página de listagem em torno de 70% completa, em breve será a ligação para as funções de edição e exclusão de registros.
           Diversos pequenos ajustes.
+          
   27/03 - Páginas de listagem contendo funções de seleção, edição e exclusão de dados completa, pendente estilização
-          Pendente pequeno ajuste com a seleção de local na seção de edição de dados, única função restante para a funcionalidade total do           sistema.
+          Pendente pequeno ajuste com a seleção de local na seção de edição de dados, única função restante para a funcionalidade total           do sistema.
           Diversos pequenos ajustes.
           
+  28/03 - Edição e exclusão de dados agoras são feitos em caixas de diálogos na própria página de listagem, e a lista é atualizada                 automaticamente.
+          Feedback para o usuário com mensagens nas funções do back-end agora são ("Reunião registrada", "Já existe uma reunião na data           selecionada") colocadas à mostra através de growls (caixas de diálogo temporárias) de acordo com as ações do usuário.
      
