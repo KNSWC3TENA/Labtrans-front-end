@@ -7,7 +7,7 @@
     
 <h:form id="reservaForm" style="border-style:solid; margin:10px 10px 10px 0px">
     <p:outputLabel for="txtNome" name="lblNome" value="Responsável: "/>
-    <h:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" size="40" style="margin: 10px 10px 10px 10px"/>
+    <h:inputText id="txtNome" type="text" value="#{Controlador.responsavel}" size="40" style="margin: 10px 10px 10px 10px" required="true"/>
     	    	
    	<!-- LISTA DE LOCAIS -->
    	<h:outputLabel for="menu_selecao" name="lblFilial" value="Filial: "/>
@@ -25,7 +25,7 @@
 	<!-- CAMPO DE TEXTO PARA A DESCRIÇÃO -->
 	<h:outputText name="lblDesc" value="Descrição: " />
 	<br/>
-	<h:inputTextarea type="textarea" name="txtDesc" value="#{Controlador.desc}" rows="4" cols="40" required="true">
+	<h:inputTextarea type="textarea" name="txtDesc" value="#{Controlador.desc}" rows="4" cols="40">
 	</h:inputTextarea>
 	
 	<!-- SELEÇÃO DE DATA E HORA DE RESERVAS -->
@@ -60,7 +60,8 @@
 			</p:spinner>
 
 		<!-- BOTÃO DE ENVIO DOS DADOS PARA A INSERÇÃO NO BANCO DE DADOS -->
-       <h:commandButton id="submit-button" value="Nova Reserva" action="#{Controlador.NovaReserva}" style="margins: 10px 10px 10px 40%" />
+		<p:growl id="growl" life="2000" />
+       <p:commandButton id="submit-button" update="growl" value="Nova Reserva" action="#{Controlador.NovaReserva}" style="margins: 10px 10px 10px 40%" />
 </h:form>
 <br/>
 		<h:outputText name="lblResultado" value="#{Controlador.mensagem}"/>
